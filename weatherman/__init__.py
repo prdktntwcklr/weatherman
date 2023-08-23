@@ -10,15 +10,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "Hello World!"
+    msg = "Hello World!"
+
+    return render_template("hello.html", message = msg)
 
 @app.route("/data")
 def data():
     cursor = get_db().cursor()
     cursor.execute("SELECT * FROM weather")
-    data = cursor.fetchall()
+    allData = cursor.fetchall()
     
-    return render_template("data.html", data = data)
+    return render_template("data.html", data = allData)
 
 def get_db():
     db = getattr(g, '_database', None)
