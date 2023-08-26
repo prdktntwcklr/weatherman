@@ -1,0 +1,16 @@
+html {
+  font-family: Lato, sans-serif;
+}
+
+/**
+ * @ref: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+
+*, *::after, *::before {
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+}
