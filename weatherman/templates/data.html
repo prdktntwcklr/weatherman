@@ -11,9 +11,9 @@
             </tr>
             {% for item in data %}
             <tr>
-                <td>{{item[0]}}</td>
-                <td>{{item[1]}}</td>
-                <td>{{item[2]}}</td>
+                <td>{{item[0]|strftime}}</td>
+                <td>{{'%0.2f'|format(item[1])}}</td>
+                <td>{{'%0.2f'|format(item[2])}}</td>
             </tr>
             {% endfor %}
         </table>
