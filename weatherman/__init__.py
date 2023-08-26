@@ -1,5 +1,6 @@
 from flask import Flask, render_template, g
 import os
+from datetime import datetime
 
 def create_app(test_config = None):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -33,5 +34,10 @@ def create_app(test_config = None):
         allData = cursor.fetchall()
         
         return render_template("data.html", data = allData)
+    
+    @app.template_filter('strftime')
+    def pretty_date(dateString, fmt='%Y-%m-%dT%H:%M+00:00'):
+        dt = datetime.strptime(dateString, fmt)
+        return dt.strftime('%Y-%m-%d %H:%M') 
     
     return app
