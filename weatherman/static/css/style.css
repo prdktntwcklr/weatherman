@@ -15,3 +15,17 @@ body {
   box-sizing: inherit;
 }
 
+.main {
+  display: flex; /* make flex container */
+  justify-content: center; /* center horizontally */
+}
+
+.table {
+  width: 40%;
+  text-align: center; /* center text */
+  border-collapse: collapse; /* use shared borders */
+}
+
+.table__th, .table__td {
+  padding: 5px;
+}

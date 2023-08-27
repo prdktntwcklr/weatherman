@@ -2,20 +2,24 @@
 {% block title %}Data{% endblock %}
 {% block head %}{{ super() }}{% endblock %}
 {% block content %}
-    <div class="content">
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Temperature</th>
-                <th>Humidity</th>
-            </tr>
-            {% for item in data %}
-            <tr>
-                <td>{{item[0]|strftime}}</td>
-                <td>{{'%0.2f'|format(item[1])}}</td>
-                <td>{{'%0.2f'|format(item[2])}}</td>
-            </tr>
-            {% endfor %}
+    <main class="main">
+        <table class="table">
+            <thead class="table__thead">
+                <tr class="table__tr">
+                    {% for item in header %}
+                    <th class="table__th">{{ item }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody class="table__tbody">
+                {% for item in data %}
+                <tr class="table__tr">
+                    <td class="table__td">{{ item[0] | strftime }}</td>
+                    <td class="table__td">{{ '%0.2f' | format(item[1]) }}</td>
+                    <td class="table__td">{{ '%0.2f' | format(item[2]) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 {% endblock %}
