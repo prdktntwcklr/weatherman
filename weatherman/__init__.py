@@ -23,19 +23,23 @@ def create_app(test_config = None):
 
     @app.route('/')
     def hello():
-        msg = "Hello World!"
+        conn = db.get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT time, temperature, humidity FROM weather ORDER BY ROWID DESC LIMIT 1")
 
-        return render_template("hello.html", message = msg)
+        rows = cursor.fetchall()
+
+        return render_template("hello.html", data = rows)
 
     @app.route("/data")
     def data():
-        cursor = db.get_db().cursor()
-        cursor.execute("SELECT * FROM weather")
+        conn = db.get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT time, temperature, humidity FROM weather")
         
-        header = [description[0] for description in cursor.description]
-        data = cursor.fetchall()
-        
-        return render_template("data.html", header = header, data = data)
+        rows = cursor.fetchall()
+
+        return render_template("data.html", data = rows)
     
     @app.template_filter('strftime')
     def pretty_date(dateString, fmt='%Y-%m-%dT%H:%M+00:00'):

@@ -6,17 +6,17 @@
         <table class="table">
             <thead class="table__thead">
                 <tr class="table__tr">
-                    {% for item in header %}
-                    <th class="table__th">{{ item }}</th>
-                    {% endfor %}
+                    <th class="table__th">time</th>
+                    <th class="table__th">temperature</th>
+                    <th class="table__th">humidity</th>
                 </tr>
             </thead>
             <tbody class="table__tbody">
                 {% for item in data %}
                 <tr class="table__tr">
-                    <td class="table__td">{{ item[0] | strftime }}</td>
-                    <td class="table__td">{{ '%0.2f' | format(item[1]) }}</td>
-                    <td class="table__td">{{ '%0.2f' | format(item[2]) }}</td>
+                    <td class="table__td">{{ item['time'] | strftime }}</td>
+                    <td class="table__td">{{ '%0.2f' | format(item['temperature']) }}</td>
+                    <td class="table__td">{{ '%0.2f' | format(item['humidity']) }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
