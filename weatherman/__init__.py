@@ -31,9 +31,11 @@ def create_app(test_config = None):
     def data():
         cursor = db.get_db().cursor()
         cursor.execute("SELECT * FROM weather")
-        allData = cursor.fetchall()
         
-        return render_template("data.html", data = allData)
+        header = [description[0] for description in cursor.description]
+        data = cursor.fetchall()
+        
+        return render_template("data.html", header = header, data = data)
     
     @app.template_filter('strftime')
     def pretty_date(dateString, fmt='%Y-%m-%dT%H:%M+00:00'):
