@@ -2,5 +2,9 @@
 {% block title %}Hello{% endblock %}
 {% block head %}{{ super() }}{% endblock %}
 {% block content %}
-    {{ message }}
+    {% for item in data %}
+    <p>Temperature: {{ '%0.2f' | format(item['temperature']) }}</p>
+    <p>Humidity: {{ '%0.2f' | format(item['humidity']) }}</p>
+    <p>Data recorded at: {{ item['time'] | strftime }}</p>
+    {% endfor %}
 {% endblock %}
