@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block content %}
+    <section class="current">
+        {% for item in data %}
+        <div class="current__data">
+            <span class="data_description">Temperature (°C)</span>
+            <span class="data_value">{{ '%0.2f' | format(item['temperature']) }}</span>
+        </div>
+        <div class="current__data">
+            <span class="data_description">Humidity (%)</span>
+            <span class="data_value">{{ '%0.2f' | format(item['humidity']) }}</span>
+        </div>
+    </section>
+    <section class="update">
+        <div class="update__time">
+            <span>Last updated: {{ item['time'] | strftime }}</span>
+        </div>
+    </section>
+        {% endfor %}
+</section>
+{% endblock %}

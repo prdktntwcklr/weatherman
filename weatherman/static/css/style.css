@@ -8,24 +8,45 @@ html {
 
 body {
   box-sizing: border-box;
-  margin: 0;
+  margin: 1rem;
 }
 
 *, *::after, *::before {
   box-sizing: inherit;
 }
 
+.header,
 .main {
-  display: flex; /* make flex container */
-  justify-content: center; /* center horizontally */
+    max-width: 60rem;
+    margin: 0 auto;
+    background-color: #cae9f5;
+}
+
+.header {
+  display: flex;
+  border-radius: 10px 10px 0px 0px;
+  justify-content: space-between;
+}
+
+.main {
+  border-radius: 0px 0px 10px 10px;
+}
+
+.current, .update, .data {
+  display: flex;
+  justify-content: space-around;
+}
+
+.current__data {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.data_value {
+  font-size: 5rem;
 }
 
 .table {
-  width: 40%;
-  text-align: center; /* center text */
-  border-collapse: collapse; /* use shared borders */
-}
-
-.table__th, .table__td {
-  padding: 5px;
+  text-align: center;
 }
