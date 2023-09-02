@@ -2,30 +2,122 @@ html {
   font-family: Lato, sans-serif;
 }
 
-/**
- * @ref: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
- */
-
+/* See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 body {
   box-sizing: border-box;
-  margin: 0;
+  margin: 1rem;
 }
 
 *, *::after, *::before {
   box-sizing: inherit;
 }
 
+html {
+	overflow-y: scroll; /* always show scrollbar */
+}
+
+.header,
 .main {
-  display: flex; /* make flex container */
-  justify-content: center; /* center horizontally */
+  max-width: 60rem;
+  margin: 0 auto;
+  background-color: #3374ca;
+  color: #ffffff;
+}
+
+.header {
+  display: flex;
+  border-radius: 10px 10px 0px 0px;
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+
+.header__link {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.1s ease-in-out;
+}
+
+.header__link:hover {
+  color: #fbe4b8;
+}
+
+.main {
+  border-radius: 0px 0px 10px 10px;
+  padding: 1rem;
+}
+
+.current, .update, .data {
+  display: flex;
+  justify-content: space-around;
+}
+
+.current__data {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.data_value {
+  font-size: 6rem;
 }
 
 .table {
-  width: 40%;
-  text-align: center; /* center text */
-  border-collapse: collapse; /* use shared borders */
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin-left: 10rem;
+  margin-right: 10rem;
 }
 
-.table__th, .table__td {
+.table__th {
+  padding-bottom: 0.5rem;
+}
+
+.table__th-left {
+  padding-left: 4px;
+  text-align: left;
+}
+
+.table__th-mid {
+  text-align: center;
+}
+
+.table__th-right {
+  padding-right: 4px;
+  text-align: right;
+}
+
+.table__td-left {
+  text-align: left;
+}
+
+.table__td-mid {
+  text-align: center;
+}
+
+.table__td-right {
+  text-align: right;
+}
+
+tbody .table__tr:hover {
+  background-color: #6697d7;
+}
+
+.table__td {
   padding: 5px;
+}
+
+/* set border-radius on the top-left and bottom-left of the first table data on the table row */
+.table__td:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+/* set border-radius on the top-right and bottom-right of the last table data on the table row */
+.table__td:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.update__time {
+  margin-top: 1rem;
 }

@@ -22,14 +22,14 @@ def create_app(test_config = None):
     db.init_app(app)
 
     @app.route('/')
-    def hello():
+    def index():
         conn = db.get_db()
         cursor = conn.cursor()
         cursor.execute("SELECT time, temperature, humidity FROM weather ORDER BY ROWID DESC LIMIT 1")
 
         rows = cursor.fetchall()
 
-        return render_template("hello.html", data = rows)
+        return render_template("index.html", data = rows)
 
     @app.route("/data")
     def data():
@@ -44,6 +44,6 @@ def create_app(test_config = None):
     @app.template_filter('strftime')
     def pretty_date(dateString, fmt='%Y-%m-%dT%H:%M+00:00'):
         dt = datetime.strptime(dateString, fmt)
-        return dt.strftime('%Y-%m-%d %H:%M') 
+        return dt.strftime('%Y-%m-%d %H:%M:00') 
     
     return app
