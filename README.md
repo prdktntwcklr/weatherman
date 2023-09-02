@@ -11,6 +11,12 @@ follow these steps to run the application locally.
 python -m venv .venv
 ```
 
+### Activate the virtual environment
+
+```bash
+.\venv\Scripts\activate
+```
+
 ### Install required dependencies
 
 ```bash
