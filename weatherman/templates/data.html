@@ -2,24 +2,26 @@
 {% block title %}Data{% endblock %}
 
 {% block content %}
-    <div class="data">
-        <table class="table">
-            <thead class="table__thead">
-                <tr class="table__tr">
-                    <th class="table__th table__th-left">time</th>
-                    <th class="table__th table__th-mid">temperature</th>
-                    <th class="table__th table__th-right">humidity</th>
-                </tr>
-            </thead>
-            <tbody class="table__tbody">
-                {% for item in data %}
-                <tr class="table__tr">
-                    <td class="table__td table__td-left">{{ item['time'] | strftime }}</td>
-                    <td class="table__td table__td-mid">{{ '%0.2f' | format(item['temperature']) }}</td>
-                    <td class="table__td table__td-right">{{ '%0.2f' | format(item['humidity']) }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <section class="main__content">
+        <div class="data">
+            <table class="table">
+                <thead class="table__thead">
+                    <tr class="table__tr">
+                        <th class="table__th table__th-left">time</th>
+                        <th class="table__th table__th-mid">temperature</th>
+                        <th class="table__th table__th-right">humidity</th>
+                    </tr>
+                </thead>
+                <tbody class="table__tbody">
+                    {% for row in data %}
+                    <tr class="table__tr">
+                        <td class="table__td table__td-left">{{ row['time'] | strftime }}</td>
+                        <td class="table__td table__td-mid">{{ '%0.2f' | format(row['temperature']) }}</td>
+                        <td class="table__td table__td-right">{{ '%0.2f' | format(row['humidity']) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 {% endblock %}

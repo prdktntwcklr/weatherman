@@ -20,7 +20,6 @@ html {
 .main {
   max-width: 60rem;
   margin: 0 auto;
-  background-color: #3374ca;
   color: #ffffff;
 }
 
@@ -29,6 +28,7 @@ html {
   border-radius: 10px 10px 0px 0px;
   justify-content: space-evenly;
   padding: 1rem;
+  background-color: #3374ca;
 }
 
 .header__link {
@@ -42,9 +42,14 @@ html {
   color: #fbe4b8;
 }
 
-.main {
+.main__content {
   border-radius: 0px 0px 10px 10px;
   padding: 1rem;
+  background-color: #3374ca;
+}
+
+.graphs {
+  margin: auto;
 }
 
 .current, .update, .data {

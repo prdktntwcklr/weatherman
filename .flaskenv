@@ -1,2 +1,1 @@
 FLASK_APP=weatherman
-FLASK_DEBUG=1
