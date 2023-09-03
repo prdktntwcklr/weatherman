@@ -14,8 +14,13 @@
 
     function drawTempChart() {
         var data = new google.visualization.DataTable();
+
         var date_formatter = new google.visualization.DateFormat({
-            pattern: "dd-MMM-yyyy HH:mm"
+            pattern: "yyyy-MM-dd HH:mm"
+        });
+
+        var value_formatter = new google.visualization.NumberFormat({
+            fractionDigits: 2
         });
 
         data.addColumn('date', 'Time');
@@ -28,11 +33,12 @@
         ]);
 
         date_formatter.format(data, 0);
+        value_formatter.format(data, 1);
 
         var options = {
             title: 'Temperature (°C)',
             hAxis: {
-                format: 'dd-MMM-yyyy HH:mm'
+                format: 'yyyy-MM-dd HH:mm'
             },
             vAxis: {
                 format: '0.00'
@@ -49,8 +55,13 @@
 
     function drawHumiChart() {
         var data = new google.visualization.DataTable();
+
         var date_formatter = new google.visualization.DateFormat({
-            pattern: "dd-MMM-yyyy HH:mm"
+            pattern: "yyyy-MM-dd HH:mm"
+        });
+
+        var value_formatter = new google.visualization.NumberFormat({
+            fractionDigits: 2
         });
 
         data.addColumn('date', 'Time');
@@ -63,11 +74,12 @@
         ]);
 
         date_formatter.format(data, 0);
+        value_formatter.format(data, 1);
 
         var options = {
             title: 'Humidity (%)',
             hAxis: {
-                format: 'dd-MMM-yyyy HH:mm'
+                format: 'yyyy-MM-dd HH:mm'
             },
             vAxis: {
                 format: '0.00'
