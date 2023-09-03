@@ -4,7 +4,12 @@ repos:
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
+        exclude: \.csv
     -   id: check-yaml
     -   id: check-added-large-files
     -   id: no-commit-to-branch
         args: ['--branch', 'main']
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
+    hooks:
+    -   id: flake8
