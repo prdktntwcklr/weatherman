@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Weatherman - {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    {% block head %} {% endblock %}
-</head>
-<body>
-    <header class="header">
-        <a class="header__link" href={{ url_for('index') }}>Home</a>
-        <a class="header__link" href={{ url_for('data') }}>Data</a>
-    </header>
-    <main class="main">
-        {% block content %}{% endblock %}
-    </main>
-</body>
+    <head>
+        <title>Weatherman - {% block title %}{% endblock -%}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <header class="header">
+            <a class="header__link" href={{ url_for('index') }}>Home</a>
+            <a class="header__link" href={{ url_for('data') }}>Data</a>
+        </header>
+
+        <main class="main">
+            {% block content %}{% endblock %}
+        </main>
+    </body>
 </html>

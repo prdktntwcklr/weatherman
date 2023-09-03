@@ -1,105 +1,103 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Index
-{% endblock %}
+{% block title %}Index{% endblock %}
 
 {% block head %}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
 
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawTempChart);
-    google.charts.setOnLoadCallback(drawHumiChart);
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawTempChart);
+        google.charts.setOnLoadCallback(drawHumiChart);
 
-    function drawTempChart() {
-        var data = new google.visualization.DataTable();
+        function drawTempChart() {
+            var data = new google.visualization.DataTable();
 
-        var date_formatter = new google.visualization.DateFormat({
-            pattern: "yyyy-MM-dd HH:mm"
-        });
+            var date_formatter = new google.visualization.DateFormat({
+                pattern: "yyyy-MM-dd HH:mm"
+            });
 
-        var value_formatter = new google.visualization.NumberFormat({
-            fractionDigits: 2
-        });
+            var value_formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2
+            });
 
-        data.addColumn('date', 'Time');
-        data.addColumn('number', 'Temperature');
+            data.addColumn('date', 'Time');
+            data.addColumn('number', 'Temperature');
 
-        data.addRows([
-            {% for row in data %}
-                [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
-            {% endfor %}
-        ]);
+            data.addRows([
+                {% for row in data %}
+                    [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+                {% endfor %}
+            ]);
 
-        date_formatter.format(data, 0);
-        value_formatter.format(data, 1);
+            date_formatter.format(data, 0);
+            value_formatter.format(data, 1);
 
-        var options = {
-            title: 'Temperature (°C)',
-            hAxis: {
-                format: 'yyyy-MM-dd HH:mm'
-            },
-            vAxis: {
-                format: '0.00'
-            },
-            legend: {position: 'none'},
-            colors: ['#3374ca'],
-            lineWidth: 3,
-        };
+            var options = {
+                title: 'Temperature (°C)',
+                hAxis: {
+                    format: 'yyyy-MM-dd HH:mm'
+                },
+                vAxis: {
+                    format: '0.00'
+                },
+                legend: {position: 'none'},
+                colors: ['#3374ca'],
+                lineWidth: 3,
+            };
 
-        var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
+            var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
 
-        chart.draw(data, options);
-    }
+            chart.draw(data, options);
+        }
 
-    function drawHumiChart() {
-        var data = new google.visualization.DataTable();
+        function drawHumiChart() {
+            var data = new google.visualization.DataTable();
 
-        var date_formatter = new google.visualization.DateFormat({
-            pattern: "yyyy-MM-dd HH:mm"
-        });
+            var date_formatter = new google.visualization.DateFormat({
+                pattern: "yyyy-MM-dd HH:mm"
+            });
 
-        var value_formatter = new google.visualization.NumberFormat({
-            fractionDigits: 2
-        });
+            var value_formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2
+            });
 
-        data.addColumn('date', 'Time');
-        data.addColumn('number', 'Humidity');
+            data.addColumn('date', 'Time');
+            data.addColumn('number', 'Humidity');
 
-        data.addRows([
-            {% for row in data %}
-                [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[2])}}],
-            {% endfor %}
-        ]);
+            data.addRows([
+                {% for row in data %}
+                    [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[2])}}],
+                {% endfor %}
+            ]);
 
-        date_formatter.format(data, 0);
-        value_formatter.format(data, 1);
+            date_formatter.format(data, 0);
+            value_formatter.format(data, 1);
 
-        var options = {
-            title: 'Humidity (%)',
-            hAxis: {
-                format: 'yyyy-MM-dd HH:mm'
-            },
-            vAxis: {
-                format: '0.00'
-            },
-            legend: {position: 'none'},
-            colors: ['#33ca89'],
-            lineWidth: 3,
-        };
+            var options = {
+                title: 'Humidity (%)',
+                hAxis: {
+                    format: 'yyyy-MM-dd HH:mm'
+                },
+                vAxis: {
+                    format: '0.00'
+                },
+                legend: {position: 'none'},
+                colors: ['#33ca89'],
+                lineWidth: 3,
+            };
 
-        var chart = new google.visualization.LineChart(document.getElementById('chart_humi'));
+            var chart = new google.visualization.LineChart(document.getElementById('chart_humi'));
 
-        chart.draw(data, options);
-    }
-    </script>
+            chart.draw(data, options);
+        }
+        </script>
 {% endblock %}
 
 {% block content %}
-    <section class="main__content">
-        {% for item in data %}
-            {% if loop.last %}
+            {% for item in data -%}
+            {% if loop.last -%}
+            <section class="main__content">
                 <section class="current">
                     <div class="current__data">
                         <span class="data_description">Temperature (°C)</span>
@@ -115,13 +113,13 @@
                         <span>Last updated: {{ item['time'] | strftime }}</span>
                     </div>
                 </section>
-            {% endif %}
-        {% endfor %}
-    </section>
-    <section class="secondary__content">
-        <section class="graphs">
-            <div id="chart_temps" style="height: 400px"></div>
-            <div id="chart_humi" style="height: 400px"></div>
-        </section>
-    </section>
+            </section>
+            {%- endif %}
+            {%- endfor %}
+            <section class="secondary__content">
+                <section class="graphs">
+                    <div id="chart_temps" style="height: 400px"></div>
+                    <div id="chart_humi" style="height: 400px"></div>
+                </section>
+            </section>
 {% endblock %}
