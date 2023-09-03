@@ -1,9 +1,13 @@
-# Web App
+# Weatherman
 
-## Installation
+A simple web application in Flask that displays temperature and humidity data
+from an SQLite database. The application is [automatically deployed](https://weatherman.onrender.com/)
+on push to the main branch of this repository.
 
-After cloning the repository and making sure Python is installed on your machine,
-follow these steps to run the application locally.
+## Running locally
+
+It is also possible to run the application locally on your machine. Before
+following the steps below make sure that you have Python installed.
 
 ### Create a new virtual environment for Python
 
