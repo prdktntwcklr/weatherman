@@ -29,6 +29,8 @@ html {
   justify-content: space-evenly;
   padding: 1rem;
   background-color: #3374ca;
+  margin-bottom: -4px; /* https://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
+
 }
 
 .header__link {
