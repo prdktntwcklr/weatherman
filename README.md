@@ -2,7 +2,15 @@
 
 A simple web application in Flask that displays temperature and humidity data
 from an SQLite database. The application is [automatically deployed](https://weatherman.onrender.com/)
-on push to the main branch of this repository.
+on push to the `main` branch of this repository.
+
+## Index page
+
+![weatherman_index](docs/weatherman_index.png)
+
+## Data page
+
+![weatherman_data](docs/weatherman_data.png)
 
 ## Running locally
 
