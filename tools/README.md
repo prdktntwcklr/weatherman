@@ -8,8 +8,8 @@ Basic usage:
 python csv-to-sqlite.py <mydata.csv>
 ```
 
-This will create an SQLite file named mydata.db in the same directory as the CSV
-file.
+This will create an SQLite file named `mydata.db` in the same directory as the
+CSV file. The name of the database itself will be `database`.
 
 ## SQLite Viewer
 

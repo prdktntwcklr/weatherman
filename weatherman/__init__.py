@@ -1,11 +1,23 @@
-from flask import Flask, render_template
 import os
+
 from datetime import datetime
+from dotenv import load_dotenv, dotenv_values
+from flask import Flask, render_template
 
 
 def create_app(test_config=None):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DATABASE_FILE = "../tools/examples/weather.db"
+    # load environmental variables in this order
+    configs = {
+        **dotenv_values(".env"),
+        **dotenv_values(".env.example"),
+        **os.environ,
+    }
+
+    load_dotenv()
+
+    # base directory is one level up from this file
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    DATABASE_FILE = configs.get("DATABASE_FILE")
 
     app = Flask(__name__)
     app.config.from_mapping(
@@ -26,7 +38,7 @@ def create_app(test_config=None):
     def index():
         conn = db.get_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT time, temperature, humidity FROM weather")
+        cursor.execute("SELECT time, temperature, humidity FROM database")
 
         rows = cursor.fetchall()
 
@@ -36,7 +48,7 @@ def create_app(test_config=None):
     def data():
         conn = db.get_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT time, temperature, humidity FROM weather")
+        cursor.execute("SELECT time, temperature, humidity FROM database")
 
         rows = cursor.fetchall()
 
