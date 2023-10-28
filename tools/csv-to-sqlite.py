@@ -1,4 +1,4 @@
-# simple script to convert a csv file into an sqlite database
+# simple script to convert a csv file into an sqlite database named 'database'
 
 import os
 import pandas
@@ -21,7 +21,9 @@ def main():
         exit(1)
 
     conn = sqlite3.connect(dbfile)
-    dataframe.to_sql(filename, conn, if_exists='replace', index=False)
+
+    # TODO: table should probably be named according to file name
+    dataframe.to_sql("database", conn, if_exists='replace', index=False)
     conn.close()
 
 

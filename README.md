@@ -40,3 +40,6 @@ pip install -r requirements.txt
 ```bash
 flask run
 ```
+
+This will load the default SQLite database specified in the `.env.example` file.
+Provide your own `.env` file to overwrite this value.
