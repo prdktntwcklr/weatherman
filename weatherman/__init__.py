@@ -1,23 +1,27 @@
 import os
 
 from datetime import datetime
-from dotenv import load_dotenv, dotenv_values
 from flask import Flask, render_template
 
-
 def create_app(test_config=None):
-    # load environmental variables in this order
-    configs = {
-        **dotenv_values(".env"),
-        **dotenv_values(".env.example"),
-        **os.environ,
-    }
+    # default env file
+    env_file = '.env.example'
 
-    load_dotenv()
+    # check if user provided env file exists and update if necessary
+    if os.path.isfile('.env'):
+        env_file = '.env'
+
+    with open(env_file, 'r') as fh:
+        configs = dict(
+            tuple(line.replace('\n', '').replace('\"', '').split('='))
+            for line in fh.readlines() if not line.startswith('#')
+        )
+
+    os.environ.update(configs)
 
     # base directory is one level up from this file
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    DATABASE_FILE = configs.get("DATABASE_FILE")
+    DATABASE_FILE = os.environ.get("DATABASE_FILE")
 
     app = Flask(__name__)
     app.config.from_mapping(

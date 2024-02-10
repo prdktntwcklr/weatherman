@@ -2,4 +2,3 @@ Flask
 gunicorn
 pandas
 pre-commit
-python-dotenv
