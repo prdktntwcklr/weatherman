@@ -1,4 +1,6 @@
+import os
 import sqlite3
+
 from flask import current_app, g
 
 
@@ -19,6 +21,24 @@ def close_db(e=None):
 
     if db is not None:
         db.close()
+
+
+def init_db():
+    db_path = current_app.config['DATABASE']
+
+    # check if database file does not exist yet
+    if not os.path.exists(db_path):
+        with current_app.open_resource("schema.sql") as f:
+            db = sqlite3.connect(db_path)
+            db.executescript(f.read().decode("utf8"))
+
+
+def get_rows():
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT time, temperature, humidity FROM database")
+
+    return cursor.fetchall()
 
 
 def init_app(app):

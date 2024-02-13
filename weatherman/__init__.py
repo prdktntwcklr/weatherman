@@ -28,6 +28,8 @@ def create_app(test_config=None):
         DATABASE=os.path.join(BASE_DIR, DATABASE_FILE),
     )
 
+    print(f"Database file used is: {app.config.get('DATABASE')}")
+
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
@@ -38,23 +40,18 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    with app.app_context():
+        db.init_db()
+
     @app.route('/')
     def index():
-        conn = db.get_db()
-        cursor = conn.cursor()
-        cursor.execute("SELECT time, temperature, humidity FROM database")
-
-        rows = cursor.fetchall()
+        rows = db.get_rows()
 
         return render_template("index.html", data=rows)
 
     @app.route("/data")
     def data():
-        conn = db.get_db()
-        cursor = conn.cursor()
-        cursor.execute("SELECT time, temperature, humidity FROM database")
-
-        rows = cursor.fetchall()
+        rows = db.get_rows()
 
         return render_template("data.html", data=rows)
 
