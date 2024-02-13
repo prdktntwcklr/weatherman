@@ -38,8 +38,15 @@ pip install -r requirements.txt
 ### Start the application
 
 ```bash
-flask run
+flask --app=weatherman run
 ```
 
+
 This will load the default SQLite database specified in the `.env.example` file.
-Provide your own `.env` file to overwrite this value.
+Provide a custom `.env` file to overwrite this value.
+
+### Running unit tests
+
+```bash
+pytest tests/
+```

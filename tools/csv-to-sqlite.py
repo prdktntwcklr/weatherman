@@ -22,7 +22,6 @@ def main():
 
     conn = sqlite3.connect(dbfile)
 
-    # TODO: table should probably be named according to file name
     dataframe.to_sql("database", conn, if_exists='replace', index=False)
     conn.close()
 
