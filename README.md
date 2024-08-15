@@ -41,7 +41,6 @@ pip install -r requirements.txt
 flask --app=weatherman run
 ```
 
-
 This will load the default SQLite database specified in the `.env.example` file.
 Provide a custom `.env` file to overwrite this value.
 
