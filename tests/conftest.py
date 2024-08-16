@@ -6,9 +6,7 @@ from weatherman import create_app
 @pytest.fixture()
 def app():
     # create new app in testing mode
-    app = create_app({
-        "TESTING": True,
-    })
+    app = create_app('testing')
 
     yield app
 
