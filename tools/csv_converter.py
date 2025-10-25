@@ -7,7 +7,7 @@ import sys
 
 def convert_csv_to_sqlite(csvfile, dbfile):
     if not os.path.exists(csvfile):
-        raise ValueError("CSV File not found")
+        raise FileNotFoundError("CSV File not found")
 
     dataframe = pandas.read_csv(csvfile)
     conn = sqlite3.connect(dbfile)
