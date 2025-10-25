@@ -20,20 +20,28 @@ def convert_csv_to_sqlite(csvfile: Path, dbfile: Path) -> None:
         conn.close()
 
 
-def get_filename_without_extension(path: str) -> str:
+def get_filename_without_extensions(path: str) -> str:
     """
-    Returns the file path without its final extension.
+    Removes all file extensions from a given path.
 
     Example:
-        >>> get_filename_without_extension("data/orders.csv")
-        'data/orders'
+        >>> get_filename_without_all_extensions("archive.tar.gz")
+        'archive'
+        >>> get_filename_without_all_extensions("/tmp/data.backup.zip")
+        '/tmp/data'
     """
-    return str(os.path.splitext(path)[0])
+    root = path
+    while True:
+        root, ext = os.path.splitext(root)
+        if not ext:
+            break
+    return root
+
 
 
 def main():
     # get the filename without extension
-    filename = get_filename_without_extension(sys.argv[1])
+    filename = get_filename_without_extensions(sys.argv[1])
 
     csvfile = filename + ".csv"
     dbfile = filename + ".db"

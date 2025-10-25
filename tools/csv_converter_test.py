@@ -3,7 +3,7 @@ import sqlite3
 import sys
 
 from pathlib import Path
-from csv_converter import convert_csv_to_sqlite, get_filename_without_extension
+from csv_converter import convert_csv_to_sqlite, get_filename_without_extensions
 
 
 def create_sample_csv(tmp_path: Path) -> Path:
@@ -124,12 +124,12 @@ def test_empty_csv_creates_empty_table(tmp_path: Path):
         ("/tmp/example.csv", "/tmp/example"),
         ("./nested/data.json", "./nested/data"),
         ("report", "report"),  # no extension
-        ("archive.tar.gz", "archive.tar"),  # removes only last extension
+        ("archive.tar.gz", "archive"),  # removes all extensions
         ("C:\\path\\to\\windows_file.txt", "C:\\path\\to\\windows_file"),  # Windows paths
     ],
 )
-def test_get_filename_without_extension(input_path, expected):
-    """Ensure the filename is correctly stripped of its final extension."""
-    result = get_filename_without_extension(input_path)
+def test_get_filename_without_extensions(input_path, expected):
+    """Ensure the filename is correctly stripped of all extensions."""
+    result = get_filename_without_extensions(input_path)
     assert result == expected
 
