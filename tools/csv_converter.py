@@ -5,34 +5,34 @@ import pandas
 import sqlite3
 import sys
 
-def convert_csv_to_sqlite(csvfile, dbfile):
+from pathlib import Path
+
+def convert_csv_to_sqlite(csvfile: Path, dbfile: Path) -> None:
     if not os.path.exists(csvfile):
         raise FileNotFoundError("CSV File not found")
 
-    dataframe = pandas.read_csv(csvfile)
-    conn = sqlite3.connect(dbfile)
-    dataframe.to_sql("database", conn, if_exists='replace', index=False)
-    conn.close()
+    try:
+        dataframe = pandas.read_csv(csvfile)
+        conn = sqlite3.connect(dbfile)
+        # Use a fixed table name ("database") — required by the backend for data lookups.
+        dataframe.to_sql("database", conn, if_exists='replace', index=False)
+    finally:
+        conn.close()
+
+
+def get_filename_without_extension():
+    """Extracts the filename (without extension) from the first CLI argument."""
+    return str(os.path.splitext(sys.argv[1])[0])
 
 
 def main():
     # get the filename without extension
-    filename = str(os.path.splitext(sys.argv[1])[0])
+    filename = get_filename_without_extension()
 
-    # add appropriate extensions
     csvfile = filename + ".csv"
     dbfile = filename + ".db"
 
-    try:
-        dataframe = pandas.read_csv(csvfile)
-    except FileNotFoundError:
-        print(f"error: file {csvfile} not found")
-        exit(1)
-
-    conn = sqlite3.connect(dbfile)
-
-    dataframe.to_sql("database", conn, if_exists='replace', index=False)
-    conn.close()
+    convert_csv_to_sqlite(csvfile, dbfile)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,9 @@
 import pytest
 import sqlite3
+import sys
+
 from pathlib import Path
-from csv_converter import convert_csv_to_sqlite
+from csv_converter import convert_csv_to_sqlite, get_filename_without_extension
 
 
 def create_sample_csv(tmp_path: Path) -> Path:
@@ -113,3 +115,30 @@ def test_empty_csv_creates_empty_table(tmp_path: Path):
         assert count == 0, "Table should have 0 rows when CSV has no data."
     finally:
         conn.close()
+
+
+def test_get_filename_without_extension(monkeypatch):
+    """Ensure the function extracts filename correctly from sys.argv[1]."""
+
+    test_args = ["script.py", "data/orders.csv"]
+    monkeypatch.setattr(sys, "argv", test_args)
+
+    result = get_filename_without_extension()
+
+    assert result == "data/orders", f"Expected 'data/orders' but got {result}"
+
+
+@pytest.mark.parametrize(
+    "input_path,expected",
+    [
+        ("file.txt", "file"),
+        ("/tmp/example.csv", "/tmp/example"),
+        ("./nested/data.json", "./nested/data"),
+        ("report", "report"),  # no extension
+        ("archive.tar.gz", "archive.tar"),  # only last extension is removed
+    ],
+)
+def test_get_filename_various_extensions(monkeypatch, input_path, expected):
+    """Test various file path scenarios to ensure os.path.splitext is handled properly."""
+    monkeypatch.setattr(sys, "argv", ["script.py", input_path])
+    assert get_filename_without_extension() == expected
