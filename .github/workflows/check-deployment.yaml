@@ -8,7 +8,7 @@ on:
       - ".github/workflows/check-deployment.yaml"
       - "tools/**"
       - "weatherman/**"
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   check-deployment:
