@@ -6,7 +6,7 @@ import pytest
 import sqlite3
 
 from pathlib import Path
-from csv_converter import (
+from tools.csv_converter import (
     convert_csv_to_sqlite,
     get_filename_without_extensions
 )
