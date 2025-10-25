@@ -9,6 +9,11 @@ def convert_csv_to_sqlite(csvfile, dbfile):
     if not os.path.exists(csvfile):
         raise ValueError("CSV File not found")
 
+    dataframe = pandas.read_csv(csvfile)
+    conn = sqlite3.connect(dbfile)
+    dataframe.to_sql("database", conn, if_exists='replace', index=False)
+    conn.close()
+
 
 def main():
     # get the filename without extension
