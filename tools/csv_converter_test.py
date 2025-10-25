@@ -117,17 +117,6 @@ def test_empty_csv_creates_empty_table(tmp_path: Path):
         conn.close()
 
 
-def test_get_filename_without_extension(monkeypatch):
-    """Ensure the function extracts filename correctly from sys.argv[1]."""
-
-    test_args = ["script.py", "data/orders.csv"]
-    monkeypatch.setattr(sys, "argv", test_args)
-
-    result = get_filename_without_extension()
-
-    assert result == "data/orders", f"Expected 'data/orders' but got {result}"
-
-
 @pytest.mark.parametrize(
     "input_path,expected",
     [
@@ -135,10 +124,12 @@ def test_get_filename_without_extension(monkeypatch):
         ("/tmp/example.csv", "/tmp/example"),
         ("./nested/data.json", "./nested/data"),
         ("report", "report"),  # no extension
-        ("archive.tar.gz", "archive.tar"),  # only last extension is removed
+        ("archive.tar.gz", "archive.tar"),  # removes only last extension
+        ("C:\\path\\to\\windows_file.txt", "C:\\path\\to\\windows_file"),  # Windows paths
     ],
 )
-def test_get_filename_various_extensions(monkeypatch, input_path, expected):
-    """Test various file path scenarios to ensure os.path.splitext is handled properly."""
-    monkeypatch.setattr(sys, "argv", ["script.py", input_path])
-    assert get_filename_without_extension() == expected
+def test_get_filename_without_extension(input_path, expected):
+    """Ensure the filename is correctly stripped of its final extension."""
+    result = get_filename_without_extension(input_path)
+    assert result == expected
+
