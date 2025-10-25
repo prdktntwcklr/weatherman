@@ -1,0 +1,37 @@
+name: check-deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/check-deployment.yaml"
+      - "tools/**"
+      - "weatherman/**"
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  check-deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Wait for deployment and check site health
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 10
+        max_attempts: 3
+        command: |
+          DEPLOY_URL="https://weatherman.onrender.com/"
+          
+          HTTP_CODE=$(curl -sSL -o /dev/null -w "%{http_code}" "$DEPLOY_URL")
+          echo "Site returned HTTP status code $HTTP_CODE"
+
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "Deployment check passed: Site is live and accessible."
+            exit 0 # Success
+          fi
+
+          echo "Deployment check failed: Site did not return 200."
+          exit 1 # Failure
