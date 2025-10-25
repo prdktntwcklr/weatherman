@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Wait for deployment and check site health
       uses: nick-fields/retry@v3
       with:
