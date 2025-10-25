@@ -1,9 +1,15 @@
+"""
+Unit tests for the csv_converter.py module.
+"""
+
 import pytest
 import sqlite3
-import sys
 
 from pathlib import Path
-from csv_converter import convert_csv_to_sqlite, get_filename_without_extensions
+from csv_converter import (
+    convert_csv_to_sqlite,
+    get_filename_without_extensions
+)
 
 
 def create_sample_csv(tmp_path: Path) -> Path:
@@ -21,6 +27,7 @@ def create_sample_csv(tmp_path: Path) -> Path:
     csv_file.write_text(csv_content)
     return csv_file
 
+
 def create_header_only_csv(tmp_path: Path) -> Path:
     """
     Helper that creates a temporary CSV file that only includes a header and no
@@ -35,14 +42,16 @@ def create_header_only_csv(tmp_path: Path) -> Path:
 
 
 def test_non_existing_file_should_throw_error(tmp_path: Path):
-    """Ensure that missing input CSV raises a FileNotFoundError and doesn't create a DB file."""
+    """Ensure that missing input CSV raises a FileNotFoundError and doesn't
+    create a DB file."""
     non_existent_csv = tmp_path / "non_existent.csv"
     db_file = tmp_path / "out.db"
 
     with pytest.raises(FileNotFoundError):
         convert_csv_to_sqlite(non_existent_csv, db_file)
 
-    assert not db_file.exists(), "Database file must not be created if CSV is missing."
+    assert not db_file.exists(), "Database file must not be created if CSV is \
+    missing."
 
 
 def test_successful_conversion(tmp_path: Path):
@@ -52,7 +61,8 @@ def test_successful_conversion(tmp_path: Path):
     table_name = "database"
 
     convert_csv_to_sqlite(csv_file, db_file)
-    assert db_file.exists(), "SQLite database should be created after conversion."
+    assert db_file.exists(), "SQLite database should be created after \
+    conversion."
 
     conn = sqlite3.connect(db_file)
     cursor = conn.cursor()
@@ -60,9 +70,11 @@ def test_successful_conversion(tmp_path: Path):
     try:
         # Check table existence
         cursor.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (table_name,)
+            "SELECT name FROM sqlite_master WHERE type='table' AND name=?;",
+            (table_name,)
         )
-        assert cursor.fetchone(), f"Table '{table_name}' should exist in the database."
+        assert cursor.fetchone(), f"Table '{table_name}' should exist in the \
+        database."
 
         # Check column names
         expected_columns = [
@@ -70,7 +82,8 @@ def test_successful_conversion(tmp_path: Path):
         ]
         cursor.execute(f"PRAGMA table_info({table_name})")
         actual_columns = [col[1] for col in cursor.fetchall()]
-        assert actual_columns == expected_columns, f"Column mismatch: {actual_columns} != {expected_columns}"
+        assert actual_columns == expected_columns, f"Column mismatch: \
+        {actual_columns} != {expected_columns}"
 
         # Check row data
         cursor.execute(f"SELECT * FROM {table_name} ORDER BY OrderID")
@@ -80,19 +93,22 @@ def test_successful_conversion(tmp_path: Path):
             (102, "Bob, J.", 120.00, 0, "2023-10-02"),
             (103, "Charlie", 5.99, 1, "2023-10-03"),
         ]
-        assert results == expected_data, "Inserted rows do not match expected content."
+        assert results == expected_data, "Inserted rows do not match expected \
+        content."
     finally:
         conn.close()
 
 
 def test_empty_csv_creates_empty_table(tmp_path: Path):
-    """Ensure that a CSV with only a header creates an empty table with correct columns."""
+    """Ensure that a CSV with only a header creates an empty table with \
+    correct columns."""
     csv_file = create_header_only_csv(tmp_path)
     db_file = tmp_path / "empty.db"
     table_name = "database"
 
     convert_csv_to_sqlite(csv_file, db_file)
-    assert db_file.exists(), "Database should be created even for header-only CSV."
+    assert db_file.exists(), "Database should be created even for header-only \
+    CSV."
 
     conn = sqlite3.connect(db_file)
     cursor = conn.cursor()
@@ -100,7 +116,8 @@ def test_empty_csv_creates_empty_table(tmp_path: Path):
     try:
         # Table should exist
         cursor.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (table_name,)
+            "SELECT name FROM sqlite_master WHERE type='table' AND name=?;",
+            (table_name,)
         )
         assert cursor.fetchone(), "Table should exist even with no data rows."
 
@@ -123,13 +140,12 @@ def test_empty_csv_creates_empty_table(tmp_path: Path):
         ("file.txt", "file"),
         ("/tmp/example.csv", "/tmp/example"),
         ("./nested/data.json", "./nested/data"),
-        ("report", "report"),  # no extension
-        ("archive.tar.gz", "archive"),  # removes all extensions
-        ("C:\\path\\to\\windows_file.txt", "C:\\path\\to\\windows_file"),  # Windows paths
+        ("report", "report"),
+        ("archive.tar.gz", "archive"),
+        ("C:\\path\\to\\windows_file.txt", "C:\\path\\to\\windows_file"),
     ],
 )
 def test_get_filename_without_extensions(input_path, expected):
     """Ensure the filename is correctly stripped of all extensions."""
     result = get_filename_without_extensions(input_path)
     assert result == expected
-
