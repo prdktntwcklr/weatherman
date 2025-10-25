@@ -5,7 +5,7 @@ A simple Python script to convert a CSV file into an SQLite database.
 Basic usage:
 
 ```bash
-python csv-to-sqlite.py <mydata.csv>
+python csv_converter.py <mydata.csv>
 ```
 
 This will create an SQLite file named `mydata.db` in the same directory as the
