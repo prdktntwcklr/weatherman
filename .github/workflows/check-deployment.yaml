@@ -8,9 +8,6 @@ on:
       - ".github/workflows/check-deployment.yaml"
       - "tools/**"
       - "weatherman/**"
-  pull_request:
-
-  workflow_dispatch:
 
 jobs:
   check-deployment:
@@ -20,8 +17,9 @@ jobs:
     - name: Wait for deployment and check site health
       uses: nick-fields/retry@v3
       with:
-        timeout_minutes: 10
-        max_attempts: 3
+        timeout_seconds: 30
+        max_attempts: 10
+        retry_wait_seconds: 15
         command: |
           DEPLOY_URL="https://weatherman.onrender.com/"
           
